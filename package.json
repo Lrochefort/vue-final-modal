@@ -22,7 +22,7 @@
     "node": ">=20.19.0"
   },
   "dependencies": {
-    "vue": "^3.3.7"
+    "vue": "^3.5.41"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.37.0",

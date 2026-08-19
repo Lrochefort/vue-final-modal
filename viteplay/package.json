@@ -7,9 +7,9 @@
     "build": "vite build"
   },
   "dependencies": {
-    "vue": "^3.3.7",
+    "vue": "^3.5.41",
     "vue-final-modal": "workspace:*",
-    "vue-router": "^4.2.5"
+    "vue-router": "^5.2.0"
   },
   "devDependencies": {
     "@viteplay/plugin": "^0.2.9",
