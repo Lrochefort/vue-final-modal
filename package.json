@@ -15,7 +15,7 @@
     "lint": "eslint . --ext=.ts,.vue --fix",
     "typecheck": "pnpm --parallel typecheck",
     "prepare:module": "pnpm --filter @vue-final-modal/nuxt dev:prepare && pnpm --filter @vue-final-modal/nuxt prepack",
-    "postinstall": "pnpm build:vfm"
+    "postinstall": "pnpm build:vfm && pnpm prepare:module"
   },
   "packageManager": "pnpm@11.13.1",
   "engines": {

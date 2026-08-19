@@ -36,15 +36,12 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      # Expected to fail until the TypeScript / vue-tsc upgrade lands.
       - name: Typecheck
         run: pnpm typecheck
 
       - name: Build library
         run: pnpm build:vfm
 
-      # Expected to fail until @nuxt/module-builder is upgraded:
-      # the --stub output uses `import.meta.dev`, which jiti 1.x cannot parse on Node >=20.
       - name: Build Nuxt module
         run: pnpm prepare:module
 
