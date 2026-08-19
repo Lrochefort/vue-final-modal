@@ -96,6 +96,11 @@ const {
   onTouchStartSwipeBanner,
 } = useSwipeToClose(props, { vfmContentEl, modelValueLocal })
 
+// `swipeBannerEl` is consumed by `ref="swipeBannerEl"` in the template, but
+// vue-tsc does not count string template refs as a usage, so `noUnusedLocals`
+// reports it as dead. Replace with `useTemplateRef` once on Vue >=3.5.
+void swipeBannerEl
+
 const index = computed(() => instance ? openedModals.indexOf(instance) : -1)
 
 watch([() => props.zIndexFn, index], () => {
