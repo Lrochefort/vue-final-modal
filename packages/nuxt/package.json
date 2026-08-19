@@ -1,7 +1,7 @@
 {
   "name": "@vue-final-modal/nuxt",
   "private": false,
-  "version": "1.0.3",
+  "version": "2.0.0",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^4.5.2",
-    "vue-final-modal": "^4.5.5"
+    "vue-final-modal": "workspace:^"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^1.0.3",
@@ -32,7 +32,8 @@
     "release-it": "^21.0.2"
   },
   "peerDependencies": {
-    "vue-final-modal": ">=4.0.0"
+    "nuxt": ">=4.0.0",
+    "vue-final-modal": ">=5.0.0"
   },
   "engines": {
     "node": ">=20.19.0"
