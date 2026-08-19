@@ -21,7 +21,7 @@ export default defineConfig({
     }),
     DefineOptions(),
     dts({
-      include: 'src',
+      include: ['src/**/*.ts', 'src/**/*.vue'],
     }),
   ],
   publicDir: false,
