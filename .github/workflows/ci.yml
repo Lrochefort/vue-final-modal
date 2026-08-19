@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: lint / typecheck / build (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      # Expected to fail until the TypeScript / vue-tsc upgrade lands.
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Build library
+        run: pnpm build:vfm
+
+      # Expected to fail until @nuxt/module-builder is upgraded:
+      # the --stub output uses `import.meta.dev`, which jiti 1.x cannot parse on Node >=20.
+      - name: Build Nuxt module
+        run: pnpm prepare:module
+
+  test:
+    name: cypress component
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - uses: cypress-io/github-action@v6
+        with:
+          install: false
+          component: true
+          browser: chrome
+          working-directory: packages/vue-final-modal
