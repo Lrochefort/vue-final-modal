@@ -1,22 +1,24 @@
 {
-  "name": "vue-final-modal",
+  "name": "@lrochefort/vue-final-modal",
   "private": false,
   "version": "5.0.0",
+  "description": "Fork of vue-final-modal - the most powerful yet most light-weight modal library for Vue 3, modernized for Vue 3.5+, Vite 8 and Node 20.19+.",
   "type": "module",
   "source": "src/index.ts",
-  "main": "./dist/index.umd.js",
+  "main": "./dist/index.umd.cjs",
   "module": "./dist/index.es.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.es.mjs",
-      "require": "./dist/index.umd.js"
+      "require": "./dist/index.umd.cjs"
     },
     "./style.css": "./dist/style.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "dev": "vite build -w",
@@ -49,22 +51,28 @@
   "engines": {
     "node": ">=20.19.0"
   },
-  "homepage": "https://vue-final-modal.org/",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/Lrochefort/vue-final-modal#readme",
   "bugs": {
-    "url": "https://github.com/vue-final/vue-final-modal/issues",
-    "email": "hunterliu1003@gmail.com"
+    "url": "https://github.com/Lrochefort/vue-final-modal/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vue-final/vue-final-modal.git",
+    "url": "git+https://github.com/Lrochefort/vue-final-modal.git",
     "directory": "packages/vue-final-modal"
   },
   "author": "Hunter Liu",
   "license": "MIT",
   "keywords": [
     "vue",
+    "vue3",
     "modal",
     "dialog",
-    "popup"
+    "popup",
+    "vue-final-modal",
+    "nuxt",
+    "fork"
   ]
 }

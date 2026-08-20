@@ -7,3 +7,24 @@ dist-ssr
 node_modules
 .idea/
 *.log
+
+# Build output. Previously only ignored per-package, so a build run from the
+# repo root or from a package without its own .gitignore was left untracked.
+.output
+.nuxt
+.nitro
+.cache
+coverage
+
+# Local environment files. These commonly hold registry tokens and must never
+# be committed. `.env.local` was already covered by `*.local`, but `.env` and
+# `.env.production` were not.
+.env
+.env.*
+!.env.example
+
+# Tarballs produced by `pnpm pack` during release verification.
+*.tgz
+
+# vscode settings folder. This is a personal preference, but it is common to ignore
+.vscode

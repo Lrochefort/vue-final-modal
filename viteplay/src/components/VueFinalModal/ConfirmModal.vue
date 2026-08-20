@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {
   VueFinalModal,
-} from 'vue-final-modal'
+} from '@lrochefort/vue-final-modal'
 
 defineProps<{
   title: string

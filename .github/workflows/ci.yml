@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [master, develop, 'release/**']
   pull_request:
 
 concurrency:
@@ -49,6 +49,9 @@ jobs:
 
       - name: Build Nuxt module
         run: pnpm prepare:module
+
+      - name: Test codemod
+        run: pnpm test:codemod
 
   test:
     name: cypress component

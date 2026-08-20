@@ -10,16 +10,3 @@ allowBuilds:
   esbuild: true
   unrs-resolver: true
   vue-demi: true
-
-minimumReleaseAgeExclude:
-  - magic-string@1.2.1
-
-# TEMPORARY. These three transitive packages published within the org's
-# minimumReleaseAge window, so the lockfile failed the supply-chain policy
-# check. Pinning one version back keeps us on sufficiently-aged releases,
-# which satisfies the policy rather than excluding it. Remove these once the
-# newer versions have aged past the cutoff.
-overrides:
-  birpc: <4.2.0
-  electron-to-chromium: <1.5.411
-  read-cache: <1.0.2

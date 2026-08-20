@@ -25,7 +25,11 @@ export default defineConfig({
       // Vite >=6 names the library stylesheet after the package ("vue-final-modal.css").
       // `vue-final-modal/style.css` is public API, so keep the original filename.
       cssFileName: 'style',
-      fileName: format => `${name}.${format}.${format === 'es' ? 'm' : ''}js`,
+      // The UMD bundle must be `.cjs`: this package is `"type": "module"`, so a
+      // `.js` file is parsed as ESM. The UMD wrapper would then find neither
+      // `module`/`exports` nor `define`, fall back to its browser-global branch,
+      // and crash on an undefined `Vue`. `.cjs` forces the CommonJS parser.
+      fileName: format => (format === 'es' ? `${name}.es.mjs` : `${name}.umd.cjs`),
     },
     rollupOptions: {
       external: [

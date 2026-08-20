@@ -1,4 +1,4 @@
-import { VueFinalModal, useModal, useModalSlot } from 'vue-final-modal'
+import { VueFinalModal, useModal, useModalSlot } from '@lrochefort/vue-final-modal'
 import DefaultSlot from '../DefaultSlot.vue'
 
 console.log('helper')

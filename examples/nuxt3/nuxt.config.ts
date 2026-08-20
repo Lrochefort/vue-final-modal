@@ -1,3 +1,3 @@
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', '@vue-final-modal/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@lrochefort/vue-final-modal-nuxt'],
 })

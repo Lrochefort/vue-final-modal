@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useVfm } from 'vue-final-modal'
+import { useVfm } from '@lrochefort/vue-final-modal'
 
 const vfm = useVfm()
 const modalId = Symbol('modalId')

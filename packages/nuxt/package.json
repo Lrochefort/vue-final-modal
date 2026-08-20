@@ -1,7 +1,8 @@
 {
-  "name": "@vue-final-modal/nuxt",
+  "name": "@lrochefort/vue-final-modal-nuxt",
   "private": false,
   "version": "2.0.0",
+  "description": "Fork of @vue-final-modal/nuxt - Nuxt 4 module for @lrochefort/vue-final-modal.",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -12,7 +13,8 @@
   },
   "main": "./dist/module.mjs",
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
@@ -22,8 +24,8 @@
     "release": "pnpm prepack && release-it"
   },
   "dependencies": {
-    "@nuxt/kit": "^4.5.2",
-    "vue-final-modal": "workspace:^"
+    "@lrochefort/vue-final-modal": "workspace:^",
+    "@nuxt/kit": "^4.5.2"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^1.0.3",
@@ -32,10 +34,34 @@
     "release-it": "^21.0.2"
   },
   "peerDependencies": {
-    "nuxt": ">=4.0.0",
-    "vue-final-modal": ">=5.0.0"
+    "@lrochefort/vue-final-modal": ">=5.0.0",
+    "nuxt": ">=4.0.0"
   },
   "engines": {
     "node": ">=20.19.0"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/Lrochefort/vue-final-modal/tree/master/packages/nuxt#readme",
+  "bugs": {
+    "url": "https://github.com/Lrochefort/vue-final-modal/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lrochefort/vue-final-modal.git",
+    "directory": "packages/nuxt"
+  },
+  "author": "Hunter Liu",
+  "keywords": [
+    "vue",
+    "vue3",
+    "nuxt",
+    "nuxt-module",
+    "modal",
+    "dialog",
+    "popup",
+    "vue-final-modal",
+    "fork"
+  ]
 }

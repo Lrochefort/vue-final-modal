@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VueFinalModal } from 'vue-final-modal'
+import { VueFinalModal } from '@lrochefort/vue-final-modal'
 import VueDragResize from 'vue3-drag-resize'
 
 const emit = defineEmits<{

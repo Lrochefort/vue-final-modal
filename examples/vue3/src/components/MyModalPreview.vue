@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useModal } from 'vue-final-modal'
+import { useModal } from '@lrochefort/vue-final-modal'
 import MyModal from './MyModal.vue'
 import VButton from './VButton.vue'
 

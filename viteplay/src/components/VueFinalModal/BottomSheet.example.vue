@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ModalsContainer, useModal, useModalSlot } from 'vue-final-modal'
+import { ModalsContainer, useModal, useModalSlot } from '@lrochefort/vue-final-modal'
 import DefaultSlot from '../DefaultSlot.vue'
 
 const bottomSheet = useModal({

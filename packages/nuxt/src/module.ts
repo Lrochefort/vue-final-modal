@@ -2,7 +2,7 @@ import { addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
 
 export default defineNuxtModule({
   meta: {
-    name: '@vue-final-modal/nuxt',
+    name: '@lrochefort/vue-final-modal-nuxt',
     configKey: 'vue-final-modal',
   },
   setup(options, nuxt) {
@@ -12,7 +12,7 @@ export default defineNuxtModule({
     nuxt.options.build.transpile.push(resolve('./runtime'))
 
     nuxt.hook('prepare:types', ({ references }) => {
-      references.push({ types: '@vue-final-modal/nuxt' })
+      references.push({ types: '@lrochefort/vue-final-modal-nuxt' })
     })
 
     // Add runtime plugin before the router plugin
@@ -21,6 +21,6 @@ export default defineNuxtModule({
       addPlugin(resolve('./runtime/plugin'))
     })
 
-    nuxt.options.css.push('vue-final-modal/style.css')
+    nuxt.options.css.push('@lrochefort/vue-final-modal/style.css')
   },
 })

@@ -1,0 +1,123 @@
+name: Release
+
+# release-it (run locally) creates the tag, the changelog commit and the GitHub
+# Release. Pushing that tag triggers this workflow, which is the only thing that
+# talks to the npm registry. This keeps the publish token in GitHub and lets npm
+# attach a provenance attestation to the published tarball.
+#
+# Tag schemes:
+#   v<version>          -> @lrochefort/vue-final-modal
+#   nuxt-v<version>     -> @lrochefort/vue-final-modal-nuxt
+#   codemod-v<version>  -> @lrochefort/vue-final-modal-codemod
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - 'nuxt-v*'
+      - 'codemod-v*'
+
+permissions:
+  contents: read
+  # Required for npm provenance (OIDC). Note: provenance additionally requires
+  # this repository to be public.
+  id-token: write
+
+jobs:
+  publish:
+    name: publish to npm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Resolve package from tag
+        id: pkg
+        run: |
+          case "$GITHUB_REF_NAME" in
+            nuxt-v*)
+              dir=packages/nuxt
+              name=@lrochefort/vue-final-modal-nuxt
+              version=${GITHUB_REF_NAME#nuxt-v}
+              ;;
+            codemod-v*)
+              dir=packages/codemod
+              name=@lrochefort/vue-final-modal-codemod
+              version=${GITHUB_REF_NAME#codemod-v}
+              ;;
+            *)
+              dir=packages/vue-final-modal
+              name=@lrochefort/vue-final-modal
+              version=${GITHUB_REF_NAME#v}
+              ;;
+          esac
+
+          # npm does not infer a dist-tag from the version: `publish` defaults to
+          # `latest` even for a prerelease. Route anything carrying a prerelease
+          # identifier (5.0.0-rc.1) to `next` so a plain `npm install` never picks
+          # up a release candidate. Promote with `npm dist-tag add` once validated.
+          if [[ "$version" == *-* ]]; then
+            disttag=next
+          else
+            disttag=latest
+          fi
+
+          {
+            echo "dir=$dir"
+            echo "name=$name"
+            echo "expected=$version"
+            echo "disttag=$disttag"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "Publishing $name@$version to dist-tag '$disttag'"
+
+      - name: Verify tag matches package version
+        run: |
+          actual=$(node -p "require('./${{ steps.pkg.outputs.dir }}/package.json').version")
+          expected='${{ steps.pkg.outputs.expected }}'
+          if [[ "$actual" != "$expected" ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME expects version $expected but package.json declares $actual"
+            exit 1
+          fi
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build library
+        run: pnpm build:vfm
+
+      - name: Build Nuxt module
+        run: pnpm prepare:module
+
+      - name: Test
+        if: steps.pkg.outputs.dir == 'packages/vue-final-modal'
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          component: true
+          browser: chrome
+          working-directory: packages/vue-final-modal
+
+      - name: Test codemod
+        if: steps.pkg.outputs.dir == 'packages/codemod'
+        run: pnpm --filter @lrochefort/vue-final-modal-codemod test
+
+      # `pnpm publish` (not `npm publish`) is required: only pnpm rewrites the
+      # `workspace:^` dependency range into a real semver range in the tarball.
+      # `--no-git-checks` is needed because tag builds run on a detached HEAD.
+      - name: Publish
+        run: >
+          pnpm --filter ${{ steps.pkg.outputs.name }} publish
+          --access public
+          --provenance
+          --no-git-checks
+          --tag ${{ steps.pkg.outputs.disttag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

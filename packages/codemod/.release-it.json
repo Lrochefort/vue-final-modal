@@ -1,0 +1,23 @@
+{
+  "github": {
+    "release": true,
+    "releaseName": "@lrochefort/vue-final-modal-codemod v${version}"
+  },
+  "npm": {
+    "publish": false
+  },
+  "git": {
+    "requireCleanWorkingDir": false,
+    "requireBranch": ["release/*", "master"],
+    "tagName": "codemod-v${version}",
+    "commitMessage": "chore(release): @lrochefort/vue-final-modal-codemod v${version}"
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md",
+      "ignoreRecommendedBump": true,
+      "path": "."
+    }
+  }
+}

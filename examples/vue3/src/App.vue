@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ModalsContainer } from 'vue-final-modal'
+import { ModalsContainer } from '@lrochefort/vue-final-modal'
 import MyModalPreview from './components/MyModalPreview.vue'
 </script>
 
