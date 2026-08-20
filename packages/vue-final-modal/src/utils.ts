@@ -32,7 +32,7 @@ export function arrayRemoveItem<T>(arr: T[], item: T) {
     return arr.splice(index, 1)
 }
 
-type Entries<T> = { [K in keyof T]: [K, T[K]] }[keyof T][]
+type Entries<T> = NonNullable<{ [K in keyof T]-?: [K, T[K]] }[keyof T]>[]
 /**
  * Type safe variant of `Object.entries()`
  */

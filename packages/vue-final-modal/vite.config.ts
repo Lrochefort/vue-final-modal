@@ -1,10 +1,6 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-// @ts-expect-error
-import VueMacros from 'unplugin-vue-macros/vite'
-// @ts-expect-error
-import DefineOptions from 'unplugin-vue-define-options/vite'
 import dts from 'vite-plugin-dts'
 
 const name = 'index'
@@ -16,14 +12,9 @@ export default defineConfig({
     },
   },
   plugins: [
-    VueMacros({
-      plugins: {
-        vue: Vue(),
-      },
-    }),
-    DefineOptions(),
+    Vue(),
     dts({
-      include: 'src',
+      include: ['src/**/*.ts', 'src/**/*.vue'],
     }),
   ],
   publicDir: false,
@@ -31,7 +22,14 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name,
-      fileName: format => `${name}.${format}.${format === 'es' ? 'm' : ''}js`,
+      // Vite >=6 names the library stylesheet after the package ("vue-final-modal.css").
+      // `vue-final-modal/style.css` is public API, so keep the original filename.
+      cssFileName: 'style',
+      // The UMD bundle must be `.cjs`: this package is `"type": "module"`, so a
+      // `.js` file is parsed as ESM. The UMD wrapper would then find neither
+      // `module`/`exports` nor `define`, fall back to its browser-global branch,
+      // and crash on an undefined `Vue`. `.cjs` forces the CommonJS parser.
+      fileName: format => (format === 'es' ? `${name}.es.mjs` : `${name}.umd.cjs`),
     },
     rollupOptions: {
       external: [

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VueFinalModal } from 'vue-final-modal'
+import { VueFinalModal } from '@lrochefort/vue-final-modal'
 import type { FormData } from './LoginFormVorms.vue'
 import LoginFormVorms from './LoginFormVorms.vue'
 

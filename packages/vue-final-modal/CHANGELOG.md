@@ -1,5 +1,40 @@
 
 
+# [5.0.0](https://github.com/Lrochefort/vue-final-modal/compare/v4.5.5...v5.0.0) (2026-08-19)
+
+First release of the `@lrochefort` fork of `vue-final-modal`.
+
+There are **no runtime API changes** in this release. Every component, composable, prop, event and slot behaves exactly as it did in `4.5.5`. All breaking changes below are to the package name and the supported toolchain. See the [migration guide](https://github.com/Lrochefort/vue-final-modal/blob/master/docs/content/2.get-started/1.guide/3.migration-guide.md).
+
+
+### BREAKING CHANGES
+
+* **package renamed:** `vue-final-modal` is now published as `@lrochefort/vue-final-modal`. Update your imports, including `@lrochefort/vue-final-modal/style.css`. A codemod is available: `npx @lrochefort/vue-final-modal-codemod@latest`.
+* **cjs entry renamed:** the CommonJS bundle is now `dist/index.umd.cjs` instead of `dist/index.umd.js`. Code that imports the bundle through the package name or the `exports` map is unaffected; only deep paths such as `require('vue-final-modal/dist/index.umd.js')` need updating.
+* **vue:** the minimum supported Vue version is now `3.5.0`, raised from `3.2.0`. This floor is set by `@vueuse/core` 14, which declares `vue: ^3.5.0` as a peer dependency. Vue 3.2, 3.3 and 3.4 are no longer supported.
+* **node:** the minimum supported Node.js version is now `20.19.0`.
+* **deps:** `@vueuse/core` and `@vueuse/integrations` peer ranges raised to `>=10.0.0`, and `focus-trap` to `>=7.2.0`.
+
+
+### Features
+
+* support Vue 3.5 and `@vueuse/core` 14 ([8da2159](https://github.com/Lrochefort/vue-final-modal/commit/8da2159))
+
+
+### Bug Fixes
+
+* **cjs:** fix `require('@lrochefort/vue-final-modal')`, which threw `TypeError: Cannot read properties of undefined (reading 'ref')` on every CommonJS consumer. The package is `"type": "module"`, so the `.js` UMD bundle was parsed as ESM; the UMD wrapper then found neither `module`/`exports` nor `define` and fell through to its browser-global branch, where `Vue` is undefined. The bundle is now emitted as `.cjs`. This affected `4.5.5` as well.
+* emit `.vue.d.ts` declaration files that were silently missing from the published package ([99e088e](https://github.com/Lrochefort/vue-final-modal/commit/99e088e))
+* restore `dist/style.css` filename, which Vite 6+ had renamed and which broke the public `./style.css` export ([faf6fce](https://github.com/Lrochefort/vue-final-modal/commit/faf6fce))
+* order `types` first in the `exports` map so TypeScript resolves the package correctly ([faf6fce](https://github.com/Lrochefort/vue-final-modal/commit/faf6fce))
+* correct `Entries<T>` so `objectEntries` no longer produces type errors under `strict` ([0852527](https://github.com/Lrochefort/vue-final-modal/commit/0852527))
+
+
+### Build System
+
+* migrate to TypeScript 6, Vite 8, `@vitejs/plugin-vue` 6 and Cypress 15 ([99e088e](https://github.com/Lrochefort/vue-final-modal/commit/99e088e))
+* drop the Vue Macros toolchain in favour of native Vue 3.5 compiler support ([faf6fce](https://github.com/Lrochefort/vue-final-modal/commit/faf6fce))
+
 ## [4.5.5](https://github.com/vue-final/vue-final-modal/compare/v4.5.4...v4.5.5) (2024-09-10)
 
 

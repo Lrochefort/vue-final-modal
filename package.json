@@ -8,27 +8,33 @@
     "generate:docs": "pnpm --filter docs generate",
     "dev:viteplay": "pnpm --filter viteplay dev",
     "build:viteplay": "pnpm --filter viteplay build",
-    "dev:vfm": "pnpm --filter vue-final-modal dev",
-    "build:vfm": "pnpm --filter vue-final-modal build",
-    "test:vfm": "pnpm --filter vue-final-modal cypress:run",
-    "release:vfm": "pnpm --filter vue-final-modal release",
+    "dev:vfm": "pnpm --filter @lrochefort/vue-final-modal dev",
+    "build:vfm": "pnpm --filter @lrochefort/vue-final-modal build",
+    "test:vfm": "pnpm --filter @lrochefort/vue-final-modal cypress:run",
+    "test:codemod": "pnpm --filter @lrochefort/vue-final-modal-codemod test",
+    "release:vfm": "pnpm --filter @lrochefort/vue-final-modal release",
+    "release:nuxt": "pnpm --filter @lrochefort/vue-final-modal-nuxt release",
+    "release:codemod": "pnpm --filter @lrochefort/vue-final-modal-codemod release",
     "lint": "eslint . --ext=.ts,.vue --fix",
     "typecheck": "pnpm --parallel typecheck",
-    "prepare:module": "pnpm --filter @vue-final-modal/nuxt dev:prepare && pnpm --filter @vue-final-modal/nuxt prepack",
+    "prepare:module": "pnpm --filter @lrochefort/vue-final-modal-nuxt dev:prepare && pnpm --filter @lrochefort/vue-final-modal-nuxt prepack",
     "postinstall": "pnpm build:vfm && pnpm prepare:module"
   },
+  "packageManager": "pnpm@11.13.1",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "dependencies": {
-    "vue": "^3.3.7"
+    "vue": "^3.5.41"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.37.0",
-    "@types/node": "^20.10.0",
-    "@vitejs/plugin-vue": "^4.5.0",
-    "concurrently": "^8.2.2",
+    "@types/node": "^26.2.0",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "concurrently": "^10.0.5",
     "eslint": "^8.36.0",
-    "pnpm": "^8.11.0",
-    "typescript": "^5.3.2",
-    "vite": "^5.0.12",
-    "vue-tsc": "1.8.20"
+    "typescript": "~6.0.3",
+    "vite": "^8.2.1",
+    "vue-tsc": "^3.3.10"
   }
 }

@@ -1,4 +1,4 @@
-import { Vfm } from "vue-final-modal"
+import { Vfm } from "@lrochefort/vue-final-modal"
 
 declare module '#app' {
   interface NuxtApp {

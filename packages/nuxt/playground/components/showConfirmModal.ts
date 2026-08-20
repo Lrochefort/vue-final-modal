@@ -1,4 +1,4 @@
-import { useModal } from 'vue-final-modal'
+import { useModal } from '@lrochefort/vue-final-modal'
 import PlainCssConfirmModal from './PlainCssConfirmModal.vue'
 
 export function showConfirmModal() {

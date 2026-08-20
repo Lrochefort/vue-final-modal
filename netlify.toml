@@ -1,7 +1,7 @@
 [build.environment]
-  NODE_VERSION = "16"
+  NODE_VERSION = "24"
 
 [build]
   publish = "docs/dist"
 
-  command = "pnpm install --shamefully-hoist && cd packages/vue-final-modal && pnpm build && cd .. && cd .. && cd docs && pnpm generate"
+  command = "pnpm install && pnpm build:vfm && pnpm prepare:module && pnpm generate:docs"

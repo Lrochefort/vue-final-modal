@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
-import { VueFinalModal } from 'vue-final-modal'
+import { VueFinalModal } from '@lrochefort/vue-final-modal'
 
 defineProps<{
   title?: string

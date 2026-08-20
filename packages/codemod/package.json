@@ -1,0 +1,51 @@
+{
+  "name": "@lrochefort/vue-final-modal-codemod",
+  "private": false,
+  "version": "1.0.0",
+  "description": "Codemod that migrates a project from vue-final-modal 4.x to @lrochefort/vue-final-modal 5.x.",
+  "type": "module",
+  "bin": {
+    "vue-final-modal-codemod": "./bin/cli.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "release": "pnpm test && release-it",
+    "test": "node --test \"test/**/*.test.mjs\""
+  },
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^12.0.0",
+    "release-it": "^21.0.2"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/Lrochefort/vue-final-modal/tree/master/packages/codemod#readme",
+  "bugs": {
+    "url": "https://github.com/Lrochefort/vue-final-modal/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lrochefort/vue-final-modal.git",
+    "directory": "packages/codemod"
+  },
+  "license": "MIT",
+  "keywords": [
+    "codemod",
+    "migration",
+    "vue",
+    "vue3",
+    "nuxt",
+    "modal",
+    "vue-final-modal"
+  ]
+}

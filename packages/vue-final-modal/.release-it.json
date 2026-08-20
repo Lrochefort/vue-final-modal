@@ -2,8 +2,14 @@
   "github": {
     "release": true
   },
+  "npm": {
+    "publish": false
+  },
   "git": {
-    "requireCleanWorkingDir": false
+    "requireCleanWorkingDir": false,
+    "requireBranch": ["release/*", "master"],
+    "tagName": "v${version}",
+    "commitMessage": "chore(release): vue-final-modal v${version}"
   },
   "plugins": {
     "@release-it/conventional-changelog": {

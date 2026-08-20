@@ -1,5 +1,5 @@
 <script setup>
-import { ModalsContainer, VueFinalModal } from 'vue-final-modal'
+import { ModalsContainer, VueFinalModal } from '@lrochefort/vue-final-modal'
 
 const getInitialValues = () => ({
   teleportTo: 'body',

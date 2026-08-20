@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
-import { createVfm } from 'vue-final-modal'
-import 'vue-final-modal/style.css'
+import { createVfm } from '@lrochefort/vue-final-modal'
+import '@lrochefort/vue-final-modal/style.css'
 import './style.css'
 import App from './App.vue'
 

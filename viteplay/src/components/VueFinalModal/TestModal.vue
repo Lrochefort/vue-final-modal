@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-// import type { VueFinalModalEmits } from 'vue-final-modal'
+// import type { VueFinalModalEmits } from '@lrochefort/vue-final-modal'
 import {
   VueFinalModal,
   useVfmAttrs,
   vueFinalModalProps,
-} from 'vue-final-modal'
+} from '@lrochefort/vue-final-modal'
 
 // export interface TestModalEmits extends VueFinalModalEmits {
 // }

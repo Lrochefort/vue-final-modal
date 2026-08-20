@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Group non-breaking updates into a single weekly PR.",
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "minor and patch updates",
+      "schedule": ["before 6am on monday"]
+    },
+    {
+      "description": "TypeScript 7 breaks vue-tsc. vue-tsc's peer range is an unenforcing '>=5.0.0', so the ceiling has to be pinned here.",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
+    },
+    {
+      "description": "The docs site is pinned to @nuxt-themes/docus 1.x, which is abandoned and requires Nuxt 3 and @nuxt/content 2.x. Do not let Renovate push it to Nuxt 4.",
+      "matchFileNames": ["docs/package.json"],
+      "matchPackageNames": ["nuxt", "@nuxt/kit", "@nuxt/schema"],
+      "enabled": false
+    }
+  ]
+}
