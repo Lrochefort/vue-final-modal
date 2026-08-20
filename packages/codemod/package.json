@@ -1,7 +1,7 @@
 {
   "name": "@lrochefort/vue-final-modal-codemod",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.0-rc.1",
   "description": "Codemod that migrates a project from vue-final-modal 4.x to @lrochefort/vue-final-modal 5.x.",
   "type": "module",
   "bin": {

@@ -65,7 +65,7 @@ curl -s https://api.github.com/repos/Lrochefort/vue-final-modal/actions/workflow
   | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const r=JSON.parse(s);console.log(r.total_count);(r.workflows||[]).forEach(w=>console.log(w.path,w.state))})"
 ```
 
-A `total_count` of `0` means either the workflow files are not on the default branch yet or Actions is still disabled.
+A `total_count` of `0` means either the workflow files are not on the default branch yet or Actions is still disabled. It is **not** conclusive on its own: GitHub registers a workflow lazily, on the first event that would trigger it, so a freshly enabled repository reports `0` until something runs. If the Actions tab does not show the *"Workflows aren't being run on this forked repository"* banner, Actions is enabled and the count will fill in after the first push or pull request.
 
 ### 4. Set `develop` as the default branch
 
@@ -105,13 +105,40 @@ pnpm release:vfm       # or release:nuxt / release:codemod
 
 `release-it` prompts for the version — choose a prerelease (`5.0.0-rc.1`) for QA, then re-run for each subsequent candidate. It pushes the commit and tag; the workflow publishes to `next`.
 
-> **The very first release is a special case.** The version numbers (`5.0.0`, `2.0.0`, `1.0.0`) and their changelog entries are already written by hand, and the repository has no tags yet. `release-it` bumps from whatever is in `package.json`, so it would propose `5.0.1` and tag a version that does not match the changelog. Pass `--no-increment` so it tags the version already on disk:
->
-> ```bash
-> pnpm release:vfm -- --no-increment
-> ```
->
-> The release workflow fails the build if the tag and `package.json` disagree, so a mismatch is caught before anything reaches npm. Subsequent releases bump normally.
+### The first release bypassed `release-it`
+
+Release 5.0.0 was cut by hand. This section records why, so the deviation is not mistaken for the normal process — **from release 5.0.1 / 2.0.1 / 1.0.1 onward the `pnpm release:*` flow above works normally.**
+
+The fork's version numbers were bumped to `5.0.0` / `2.0.0` / `1.0.0` in a plain commit, with hand-written changelog entries and no accompanying tags. That left `release-it` unable to run:
+
+- **It refused to release.** `release-it` derives the next version from `package.json`. Since semver orders `5.0.0-rc.1` *below* `5.0.0`, asking for the release candidate returned `No new version to release`.
+- **`--no-increment` tagged correctly but produced a broken changelog.** It resolves the previous tag with `git describe --tags --abbrev=0 <commit>^`; with no earlier tag it fell back to walking the entire upstream history and emitted the nonsensical header `compare/v4.5.5...v4.5.5`.
+- **With no `v*` tag at all, the changelog was unusable.** `conventional-changelog` walked all of upstream's history into a 387-line entry containing 43 issue links rewritten to `Lrochefort/vue-final-modal/issues/*` — issues that do not exist in this fork.
+
+The last point is fixed permanently: `v4.5.5` is now tagged at `be7430c` (upstream's *Release 4.5.5*, the fork point), so `git describe --tags --match=v*` always resolves. Pushing that tag was safe because `release.yml` does not exist in that commit's tree, and a tag push runs the workflow present at the tagged commit.
+
+The manual procedure was:
+
+```bash
+git checkout -b release/5.0.0 origin/develop
+
+# hand-set the version in all three package.json files, then
+pnpm install                       # confirm pnpm-lock.yaml does not move
+pnpm install --frozen-lockfile     # what CI runs
+
+git commit -am "chore(release): 5.0.0-rc.1"
+git push -u origin release/5.0.0
+
+# one tag at a time — wait for each workflow to go green before the next,
+# because the Nuxt module depends on the core package
+git tag -a v5.0.0-rc.1        -m "..." && git push origin v5.0.0-rc.1
+git tag -a nuxt-v2.0.0-rc.1   -m "..." && git push origin nuxt-v2.0.0-rc.1
+git tag -a codemod-v1.0.0-rc.1 -m "..." && git push origin codemod-v1.0.0-rc.1
+```
+
+Two consequences of skipping `release-it`: nothing writes the changelog (the 5.0.0 entries were already written by hand) and nothing creates the GitHub Releases, so those were created manually from the final tags.
+
+Because the versions are hand-set, the workflow's *Verify tag matches package version* step is the safety net — it fails the build before anything reaches npm if a tag and its `package.json` disagree.
 
 When UAT passes, run it once more and choose the final version (`5.0.0`). That tag publishes to `latest`. Then:
 

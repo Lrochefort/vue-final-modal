@@ -1,7 +1,7 @@
 {
   "name": "@lrochefort/vue-final-modal-nuxt",
   "private": false,
-  "version": "2.0.0",
+  "version": "2.0.0-rc.1",
   "description": "Fork of @vue-final-modal/nuxt - Nuxt 4 module for @lrochefort/vue-final-modal.",
   "license": "MIT",
   "type": "module",
@@ -34,7 +34,7 @@
     "release-it": "^21.0.2"
   },
   "peerDependencies": {
-    "@lrochefort/vue-final-modal": ">=5.0.0",
+    "@lrochefort/vue-final-modal": ">=5.0.0-rc.1",
     "nuxt": ">=4.0.0"
   },
   "engines": {

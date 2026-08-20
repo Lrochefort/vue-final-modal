@@ -1,7 +1,7 @@
 {
   "name": "@lrochefort/vue-final-modal",
   "private": false,
-  "version": "5.0.0",
+  "version": "5.0.0-rc.1",
   "description": "Fork of vue-final-modal - the most powerful yet most light-weight modal library for Vue 3, modernized for Vue 3.5+, Vite 8 and Node 20.19+.",
   "type": "module",
   "source": "src/index.ts",
