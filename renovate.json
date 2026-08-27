@@ -1,7 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    "helpers:pinGitHubActionDigests",
+    "helpers:githubDigestChangelogs"
   ],
   "lockFileMaintenance": {
     "enabled": true
@@ -11,6 +13,12 @@
       "description": "Group non-breaking updates into a single weekly PR.",
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "minor and patch updates",
+      "schedule": ["before 6am on monday"]
+    },
+    {
+      "description": "Digest bumps are neither minor nor patch, so the rule above misses them. Without this they arrive one PR at a time, daily.",
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions",
       "schedule": ["before 6am on monday"]
     },
     {
