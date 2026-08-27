@@ -26,6 +26,9 @@ coverage
 # Tarballs produced by `pnpm pack` during release verification.
 *.tgz
 
+# Cypress failure screenshots, produced only when CI=1.
+cypress/screenshots
+
 # vscode settings folder. This is a personal preference, but it is common to ignore
 .vscode
 
