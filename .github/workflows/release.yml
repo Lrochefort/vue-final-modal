@@ -33,6 +33,8 @@ jobs:
     name: publish to npm
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # Name must match the environment on npm's trusted publisher config, once set up.
+    environment: npm
     steps:
       - uses: actions/checkout@v5
         with:
