@@ -31,3 +31,6 @@ coverage
 
 # notes are personal and not relevant to the project, so they should be ignored
 notes/
+
+# .github/prompts is used to store personal prompt templates for GitHub Copilot. These are personal and not relevant to the project, so they should be ignored.
+.github/prompts/
