@@ -28,3 +28,6 @@ coverage
 
 # vscode settings folder. This is a personal preference, but it is common to ignore
 .vscode
+
+# notes are personal and not relevant to the project, so they should be ignored
+notes/
