@@ -192,7 +192,9 @@ export function compareVersions(a, b) {
  * @returns {string | null}
  */
 export function lowestVersionInRange(range) {
-  const match = /^\s*(?:\^|~|>=?|=)?\s*(\d+)(?:\.(\d+))?(?:\.(\d+))?/.exec(range)
+  // Leading whitespace is trimmed rather than matched: `^\s*...\s*` lets the engine
+  // split a run of spaces between both quantifiers, which is quadratic (js/polynomial-redos).
+  const match = /^(?:\^|~|>=?|=)?\s*(\d+)(?:\.(\d+))?(?:\.(\d+))?/.exec(range.trim())
   if (!match)
     return null
   return `${match[1]}.${match[2] ?? 0}.${match[3] ?? 0}`
