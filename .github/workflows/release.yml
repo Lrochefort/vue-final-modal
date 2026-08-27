@@ -23,16 +23,24 @@ permissions:
   # this repository to be public.
   id-token: write
 
+# Never abort a half-finished publish.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   publish:
     name: publish to npm
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
 
       - uses: pnpm/action-setup@v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: pnpm
@@ -79,11 +87,13 @@ jobs:
           echo "Publishing $name@$version to dist-tag '$disttag'"
 
       - name: Verify tag matches package version
+        env:
+          DIR: ${{ steps.pkg.outputs.dir }}
+          EXPECTED: ${{ steps.pkg.outputs.expected }}
         run: |
-          actual=$(node -p "require('./${{ steps.pkg.outputs.dir }}/package.json').version")
-          expected='${{ steps.pkg.outputs.expected }}'
-          if [[ "$actual" != "$expected" ]]; then
-            echo "::error::Tag $GITHUB_REF_NAME expects version $expected but package.json declares $actual"
+          actual=$(node -p "require('./' + process.env.DIR + '/package.json').version")
+          if [[ "$actual" != "$EXPECTED" ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME expects version $EXPECTED but package.json declares $actual"
             exit 1
           fi
 
@@ -114,10 +124,12 @@ jobs:
       # `--no-git-checks` is needed because tag builds run on a detached HEAD.
       - name: Publish
         run: >
-          pnpm --filter ${{ steps.pkg.outputs.name }} publish
+          pnpm --filter "$PKG_NAME" publish
           --access public
           --provenance
           --no-git-checks
-          --tag ${{ steps.pkg.outputs.disttag }}
+          --tag "$DIST_TAG"
         env:
+          PKG_NAME: ${{ steps.pkg.outputs.name }}
+          DIST_TAG: ${{ steps.pkg.outputs.disttag }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
